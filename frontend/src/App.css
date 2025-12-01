@@ -1,0 +1,11 @@
+.App {
+    min-height: 100vh;
+}
+
+.play-field {
+    width: 100vw;
+    background-color: #2C2F35;
+    color: white;
+    height: 90vh;
+    margin-top: 10vh;
+}
