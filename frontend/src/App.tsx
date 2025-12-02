@@ -1,4 +1,5 @@
-import Header from './comp/Header'
+import Header from './comp/Header/Header'
+import PlayField from './comp/PlayField/PlayField'
 import './App.css'
 import {useState } from 'react'
 
@@ -11,7 +12,7 @@ export default function App() {
         <Header userName={user_name}/>
       </div>
        <div className="play-field">
-        playfield
+        <PlayField />
        </div>
     </div>
   )
