@@ -1,7 +1,11 @@
-export default function Header() {
+interface HeaderProps {
+    userName: string;
+}
+
+export default function Header({userName}: HeaderProps) {
     return (
         <>
-        Header
+        {userName}
         </>
     )
 }
