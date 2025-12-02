@@ -10,7 +10,6 @@
     background-color: #2C2F35;
     color: white;
     height: 90vh;
-    margin-top: 10vh;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding-top: 20px;
@@ -18,4 +17,11 @@
     padding-right: 20px;
     overflow-y: hidden;
     flex-grow: 1;
+}
+
+.header {
+    color: white;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
