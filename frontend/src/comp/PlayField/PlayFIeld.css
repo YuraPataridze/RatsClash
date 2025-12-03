@@ -40,3 +40,7 @@
     width: 52px;
     height: auto;
 }
+
+.progress-bar progress {
+    width: 100%;
+}

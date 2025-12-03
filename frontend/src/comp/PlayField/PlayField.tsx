@@ -7,6 +7,9 @@ export default function PlayField() {
     const [coinsToLevUpm, setCoinsToLevUp] = useState<number>(10)
     const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
 
+    const [progressBarVal, setProgressBarVal] = useState<number>(coins)
+    const [maxProgressValVal, setMaxProgressValVal] = useState<number>(100)
+
     return (
         <>
             <div className="bar">
@@ -37,6 +40,9 @@ export default function PlayField() {
             <div className="coins">
                 <img src="./assets/coinICON.png" alt="coins" />
                 <h1>{coins}</h1>
+            </div>
+            <div className="progress-bar">
+                <progress value={progressBarVal} max={maxProgressValVal}></progress>
             </div>
         </>
     )
