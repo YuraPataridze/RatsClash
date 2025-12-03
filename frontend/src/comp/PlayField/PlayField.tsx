@@ -12,6 +12,11 @@ export default function PlayField() {
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
     const [maxProgressValVal, setMaxProgressValVal] = useState<number>(100)
 
+    // manage click fun
+    function manageClick() {
+        console.log("CLICKED +1")
+    }
+
     return (
         <>
             <div className="bar">
@@ -45,6 +50,11 @@ export default function PlayField() {
             </div>
             <div className="progress-bar">
                 <progress value={progressBarVal} max={maxProgressValVal}></progress>
+            </div>
+            <div className="click-btn">
+                <div onClick={manageClick} className="button">
+                    <img src="./assets/coinICON.svg" alt="click-btn" />
+                </div>
             </div>
         </>
     )

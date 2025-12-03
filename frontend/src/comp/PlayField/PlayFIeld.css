@@ -44,3 +44,15 @@
 .progress-bar progress {
     width: 100%;
 }
+
+.click-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.button img {
+    width: 302px;
+    height: auto;
+    cursor: pointer;
+}
