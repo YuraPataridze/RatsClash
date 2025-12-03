@@ -2,11 +2,13 @@ import { useState } from "react"
 import "./PlayFIeld.css"
 
 export default function PlayField() {
+    // coins state
     const [coins, setCoins] = useState<number>(0)
     const [earnPerClick, setEarnPerCkick] = useState<number>(1)
     const [coinsToLevUpm, setCoinsToLevUp] = useState<number>(10)
     const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
 
+    // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
     const [maxProgressValVal, setMaxProgressValVal] = useState<number>(100)
 
