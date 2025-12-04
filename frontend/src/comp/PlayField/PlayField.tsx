@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./PlayFIeld.css"
 
 export default function PlayField() {
     // coins state
-    const [coins, setCoins] = useState<number>(0)
+    const [coins, setCoins] = useState<any>(localStorage.getItem("coins"))
     const [earnPerClick, setEarnPerCkick] = useState<number>(1)
-    const [coinsToLevUpm, setCoinsToLevUp] = useState<number>(10)
+    const [coinsToLevUp, setCoinsToLevUp] = useState<number>(10)
     const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
 
     // progress-bar states
@@ -14,8 +14,20 @@ export default function PlayField() {
 
     // manage click fun
     function manageClick() {
+        // test
         console.log("CLICKED +1")
+
+        setCoins(Number(coins) + earnPerClick)
+        setProgressBarVal(Number(coins) + 1)
+
+        if (Number(coins) >= coinsToLevUp) {
+            alert("leveled up!")
+        }
     }
+
+    useEffect(() => {
+        localStorage.setItem("coins", coins)
+    })
 
     return (
         <>
@@ -24,28 +36,28 @@ export default function PlayField() {
                     <div className="bar-tab">
                         <p>Earn per click</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.png" alt="coin" />
+                            <img src="./assets/coinICON.svg" alt="coin" />
                             <p>{earnPerClick}</p>
                         </div>
                     </div>
                     <div className="bar-tab">
                         <p>Coins level up</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.png" alt="coin" />
-                            <p>{coinsToLevUpm}</p>
+                            <img src="./assets/coinICON.svg" alt="coin" />
+                            <p>{coinsToLevUp}</p>
                         </div>
                     </div>
                     <div className="bar-tab">
                         <p>Auto earn p/sec</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.png" alt="coin" />
+                            <img src="./assets/coinICON.svg" alt="coin" />
                             <p>{coinsPerSec}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="coins">
-                <img src="./assets/coinICON.png" alt="coins" />
+                <img src="./assets/coinICON.svg" alt="coins" />
                 <h1>{coins}</h1>
             </div>
             <div className="progress-bar">
