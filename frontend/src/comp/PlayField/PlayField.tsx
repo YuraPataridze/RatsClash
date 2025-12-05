@@ -4,13 +4,13 @@ import "./PlayFIeld.css"
 export default function PlayField() {
     // coins state
     const [coins, setCoins] = useState<any>(localStorage.getItem("coins"))
-    const [earnPerClick, setEarnPerCkick] = useState<number>(1)
-    const [coinsToLevUp, setCoinsToLevUp] = useState<number>(10)
+    const [earnPerClick, setEarnPerClick] = useState<number>(1)
+    const [coinsToLevUp, setCoinsToLevUp] = useState<number>(100)
     const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
 
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
-    const [maxProgressValVal, setMaxProgressValVal] = useState<number>(100)
+    const [maxProgressVal, setMaxProgressVal] = useState<number>(coins)
 
     // manage click fun
     function manageClick() {
@@ -21,7 +21,13 @@ export default function PlayField() {
         setProgressBarVal(Number(coins) + 1)
 
         if (Number(coins) >= coinsToLevUp) {
-            alert("leveled up!")
+            console.log("leveled up!")
+            setCoinsToLevUp(coinsToLevUp + 100)
+            setEarnPerClick(earnPerClick + 2)
+        }
+
+        if (coinsToLevUp >= 500) {
+            setCoinsToLevUp(coinsToLevUp + 500)
         }
     }
 
@@ -61,7 +67,7 @@ export default function PlayField() {
                 <h1>{coins}</h1>
             </div>
             <div className="progress-bar">
-                <progress value={progressBarVal} max={maxProgressValVal}></progress>
+                <progress value={progressBarVal} max={coinsToLevUp}></progress>
             </div>
             <div className="click-btn">
                 <div onClick={manageClick} className="button">
