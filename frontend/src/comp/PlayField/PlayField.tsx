@@ -47,36 +47,36 @@ export default function PlayField() {
                     <div className="bar-tab">
                         <p>Earn per click</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.svg" alt="coin" />
+                            <img src="/assets/coinICON.svg" alt="coin" />
                             <p>{earnPerClick}</p>
                         </div>
                     </div>
                     <div className="bar-tab">
                         <p>Coins level up</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.svg" alt="coin" />
+                            <img src="/assets/coinICON.svg" alt="coin" />
                             <p>{coinsToLevUp}</p>
                         </div>
                     </div>
                     <div className="bar-tab">
                         <p>Auto earn p/sec</p>
                         <div className="coin">
-                            <img src="./assets/coinICON.svg" alt="coin" />
+                            <img src="/assets/coinICON.svg" alt="coin" />
                             <p>{coinsPerSec}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="coins">
-                <img src="./assets/coinICON.svg" alt="coins" />
+                <img src="/assets/coinICON.svg" alt="coins" />
                 <h1>{coins}</h1>
             </div>
             <div className="progress-bar">
-                <progress value={progressBarVal} max={maxProgressVal}></progress>
+                <progress value={progressBarVal} max={coinsToLevUp}></progress>
             </div>
             <div className="click-btn">
                 <div onClick={manageClick} className="button">
-                    <img src="./assets/coinICON.svg" alt="click-btn" />
+                    <img src="/assets/coinICON.svg" alt="click-btn" />
                 </div>
             </div>
         </>
