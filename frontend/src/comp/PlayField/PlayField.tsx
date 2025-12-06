@@ -72,7 +72,7 @@ export default function PlayField() {
                 <h1>{coins}</h1>
             </div>
             <div className="progress-bar">
-                <progress value={progressBarVal} max={coinsToLevUp}></progress>
+                <progress value={progressBarVal} max={maxProgressVal}></progress>
             </div>
             <div className="click-btn">
                 <div onClick={manageClick} className="button">
