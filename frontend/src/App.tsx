@@ -1,9 +1,10 @@
-import Header from './comp/Header'
+import Header from './comp/Header/Header'
+import PlayField from './comp/PlayField/PlayField'
 import './App.css'
 import {useState } from 'react'
 
 export default function App() {
-  const [user_name, set_user_name] = useState<string>("pataridze19")
+  const [user_name, _set_user_name] = useState<string>("pataridze19")
 
   return (
     <div className='App'>
@@ -11,7 +12,7 @@ export default function App() {
         <Header userName={user_name}/>
       </div>
        <div className="play-field">
-        playfield
+        <PlayField />
        </div>
     </div>
   )
