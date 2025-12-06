@@ -15,7 +15,7 @@ export default function PlayField() {
     const [coinsPerSec, _setCoinsPerSec] = useState<number>(0)
 
     // level
-    const [level, setLevel] = useState<number>()
+    const [_level, _setLevel] = useState<number>()
 
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
