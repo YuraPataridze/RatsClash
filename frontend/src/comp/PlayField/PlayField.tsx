@@ -1,4 +1,4 @@
-// to-do: added localstorage for all states here
+// to-do: add localstorage for all states here
 
 import { useEffect, useState } from "react"
 import "./PlayFIeld.css"
