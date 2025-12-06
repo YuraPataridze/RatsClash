@@ -12,14 +12,14 @@ export default function PlayField() {
     const [coins, setCoins] = useState<any>(localStorage.getItem("coins"))
     const [earnPerClick, setEarnPerClick] = useState<number>(1)
     const [coinsToLevUp, setCoinsToLevUp] = useState<number>(100)
-    const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
+    const [coinsPerSec, _setCoinsPerSec] = useState<number>(0)
 
     // level
     const [level, setLevel] = useState<number>()
 
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
-    const [maxProgressVal, setMaxProgressVal] = useState<number>(coins)
+    const [maxProgressVal, _setMaxProgressVal] = useState<number>(coins)
 
     // manage click fun
     function manageClick() {
