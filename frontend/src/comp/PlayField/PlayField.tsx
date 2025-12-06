@@ -1,12 +1,21 @@
+// to-do: added localstorage for all states here
+
 import { useEffect, useState } from "react"
 import "./PlayFIeld.css"
 
 export default function PlayField() {
+    useEffect(() => {
+        localStorage.setItem("coins", coins)
+    })
+
     // coins state
     const [coins, setCoins] = useState<any>(localStorage.getItem("coins"))
     const [earnPerClick, setEarnPerClick] = useState<number>(1)
     const [coinsToLevUp, setCoinsToLevUp] = useState<number>(100)
     const [coinsPerSec, setCoinsPerSec] = useState<number>(0)
+
+    // level
+    const [level, setLevel] = useState<number>()
 
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
@@ -30,10 +39,6 @@ export default function PlayField() {
             setCoinsToLevUp(coinsToLevUp + 500)
         }
     }
-
-    useEffect(() => {
-        localStorage.setItem("coins", coins)
-    })
 
     return (
         <>
