@@ -44,7 +44,6 @@ app.post('/api/coins', (req, res) => {
     res.json({ status: 'success', saved: coins });
 });
 
-// --- ЗАПУСК ---
 app.listen(PORT, () => {
     console.log(`🚀 Сервер работает на http://localhost:${PORT}`);
 });
