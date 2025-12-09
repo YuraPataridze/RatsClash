@@ -21,19 +21,15 @@ if (!fs.existsSync(DB_FILE)) {
      }));
 }
 
-// --- РОУТ 1: ПОЛУЧИТЬ МОНЕТКИ (GET) ---
 // Фронтенд делает запрос сюда, чтобы узнать текущий счет
-app.get('/api/score', (req, res) => {
-    // 1. Читаем файл
-    const data = fs.readFileSync(DB_FILE, 'utf8');
-    // 2. Превращаем текст в объект JS и отправляем
-    const json = JSON.parse(data);
+app.get('/api/coins', (req, res) => {
+    // Превращаем текст в объект JS и отправляем
+    const json = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
     res.json(json);
 });
 
-// --- РОУТ 2: СОХРАНИТЬ МОНЕТКИ (POST) ---
 // Фронтенд присылает сюда новое количество монет
-app.post('/api/score', (req, res) => {
+app.post('/api/coins', (req, res) => {
     const { coins } = req.body; // Получаем число из запроса
 
     if (typeof coins !== 'number') {
