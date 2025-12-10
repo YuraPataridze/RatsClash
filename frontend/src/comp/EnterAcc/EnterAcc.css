@@ -1,0 +1,32 @@
+.window {
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    background-color: #32363C;
+    border-radius: 15px;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.content button {
+    border: none;
+    background-color: #1C1F24;
+    color: white;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 50%;
+    cursor: pointer;
+}
+
+.content form .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
