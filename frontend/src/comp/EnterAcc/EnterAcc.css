@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-.content form .form {
+.content .form .form-content {
     display: flex;
     flex-direction: column;
     align-items: center;
