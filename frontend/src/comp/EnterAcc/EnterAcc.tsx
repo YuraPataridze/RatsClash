@@ -1,7 +1,9 @@
 import "./EnterAcc.css"
 
 export default function EnterAcc() {
-    function handleEnter() {}
+    function handleEnter() {
+        alert('clicked')
+    }
 
     return (
         <>
@@ -11,7 +13,7 @@ export default function EnterAcc() {
                     <div className="form">
                         <div className="form-content">
                             <input type="password" id="psw-input" placeholder="Account unique code" />
-                            <button>Enter!</button>
+                            <button onClick={handleEnter}>Enter!</button>
                         </div>
                     </div>
                 </div>

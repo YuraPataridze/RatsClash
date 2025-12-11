@@ -7,6 +7,8 @@ import {useState } from 'react'
 
 export default function App() {
   const [user_name, _set_user_name] = useState<string>("pataridze19")
+  
+  //in the furute will work changing this state(with localstorage)
   const [entered, setEntered] = useState<boolean>(false)
 
   return (
