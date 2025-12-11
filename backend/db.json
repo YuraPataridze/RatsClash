@@ -1,14 +1,7 @@
 {
-  "users": [
-    {
-      "username": "patarridze19",
-      "password": "pataridze19",
-      "coins": 0
-    },
-    {
-      "username": "test_player",
-      "password": "test_player",
-      "coins": 0
+  "users": {
+    "pataridze19-code": {
+      "coins": 50
     }
-  ]
+  }
 }

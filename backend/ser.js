@@ -1,15 +1,15 @@
-const express = require('express');
-const fs = require('fs'); // Модуль для работы с файлами
-const cors = require('cors'); // Модуль для разрешения запросов с браузера
-const path = require('path');
+const express = require('express')
+const fs = require('fs') // Модуль для работы с файлами
+const cors = require('cors')// Модуль для разрешения запросов с браузера
+const path = require('path')
 
-const app = express();
+const app = express()
 const PORT = 3000; // Порт, на котором будет работать сервер
-const DB_FILE = path.join(__dirname, 'db.json');
+const DB_FILE = path.join(__dirname, 'db.json')
 
 // --- НАСТРОЙКИ ---
 app.use(cors()); // Разрешаем фронтенду стучаться сюда
-app.use(express.json()); // Учим сервер понимать JSON, который придет с фронта
+app.use(express.json()) // Учим сервер понимать JSON, который придет с фронта
 
 // если файла нет, создадим его с 0 монет
 if (!fs.existsSync(DB_FILE)) {
@@ -21,29 +21,68 @@ if (!fs.existsSync(DB_FILE)) {
      }));
 }
 
-// Фронтенд делает запрос сюда, чтобы узнать текущий счет
-app.get('/api/coins', (req, res) => {
-    // Превращаем текст в объект JS и отправляем
-    const json = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-    res.json(json);
-});
+// authorisation
+app.post('/api/enter', (req, res) => {
+    const { code } = req.body
 
-// Фронтенд присылает сюда новое количество монет
-app.post('/api/coins', (req, res) => {
-    const { coins } = req.body; // Получаем число из запроса
-
-    if (typeof coins !== 'number') {
-        return res.status(400).json({ error: 'Нужно прислать число!' });
+    if (!code) {
+        return res.status(400).json({ error: 'Нужен код!' })
     }
 
-    // 1. Записываем новые данные в файл
-    fs.writeFileSync(DB_FILE, JSON.stringify({ coins: coins }));
-    
-    // 2. Отвечаем, что всё ок
-    console.log(`Сохранено монет: ${coins}`);
-    res.json({ status: 'success', saved: coins });
+    const db_data = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'))
+
+    const user = db_data.users[code]
+
+    if (!user) {
+        return res.status(401).json({ error: 'Код неверный' })
+    }
+
+    res.json({
+        status: "ok",
+        code: code,
+        coins: user.coins
+    })
+})
+
+// get coins(need code)
+app.post('/api/coins/get', (req, res) => {
+    const {code} = req.body
+
+    if (!code || typeof code !== "string") {
+        return res.status(400).json({ message: 'Неверный код' })
+    }
+
+    const db_data = JSON.parse(fs.readFileSync(DB_FILE, "utf-8"))
+
+    if (!db_data.users[code]) {
+        return res.status(401).json({ message: 'Неверный код' })
+    }
+
+    return res.status(200).json({ coins: db_data.users[code].coins })
+})
+
+// update coins
+app.post('/api/coins/set', (req, res) => {
+    const { code, new_coins } = req.body
+
+    if (typeof new_coins !== 'number') {
+        return res.status(400).json({ message: "new_coins должен быть числом" })
+    }
+
+    const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'))
+
+    if (!db.users[code]) {
+        return res.status(401).json({ message: 'Неверный код' })
+    }
+
+    db.users[code].coins = new_coins
+
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2))
+
+    res.json({ status: "success", coins: new_coins })
 });
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Сервер работает на http://localhost:${PORT}`);
-});
+})
