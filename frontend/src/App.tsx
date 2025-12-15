@@ -36,17 +36,18 @@ export default function App() {
               console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
           }
           console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
+          _setEntered(true)
           //console.log(`Coins of user ${gottent_from_back_data.user_code} are ${gottent_from_back_data.coins}`)//as test showing coins in console
 
           // !setting fetched from back data!
-          _set_user_name(gottent_from_back_data.user_name)
-          setCoins(gottent_from_back_data.coins)
-          setEarnPerClick(gottent_from_back_data.earnPerClick)
-          setCoinsToLevUp(gottent_from_back_data.coinsToLevUp)
-          _setCoinsPerSec(gottent_from_back_data.coinsToLevUp)
-          _setLevel(gottent_from_back_data.level)
-          setProgressBarVal(gottent_from_back_data.progressBarVal)
-          _setMaxProgressVal(gottent_from_back_data._maxProgressVal)
+          _set_user_name(String(gottent_from_back_data.user_name))
+          setCoins(Number(gottent_from_back_data.coins))
+          setEarnPerClick(Number(gottent_from_back_data.earnPerClick))
+          setCoinsToLevUp(Number(gottent_from_back_data.coinsToLevUp))
+          _setCoinsPerSec(Number(gottent_from_back_data.coinsToLevUp))
+          _setLevel(Number(gottent_from_back_data.level))
+          setProgressBarVal(Number(gottent_from_back_data.progressBarVal))
+          _setMaxProgressVal(Number(gottent_from_back_data._maxProgressVal))
         } catch (e) {
             setLoading(false)
             console.error(`%cUNKNOW ERROR: ${e}`, 'color: red')
