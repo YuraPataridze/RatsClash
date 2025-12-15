@@ -38,6 +38,9 @@ export default function App() {
           console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
           _setEntered(true)
           //console.log(`Coins of user ${gottent_from_back_data.user_code} are ${gottent_from_back_data.coins}`)//as test showing coins in console
+          
+          // debug
+          console.log(gottent_from_back_data)
 
           // !setting fetched from back data!
           _set_user_name(String(gottent_from_back_data.user_name))
