@@ -1,7 +1,13 @@
 {
   "users": {
     "pataridze19-code": {
-      "coins": 50
+      "coins": 50,
+      "earnPerClick": 1,
+      "coinsToLevUp": 100,
+      "coinsPerSec": 0,
+      "level": 1,
+      "progressBarVal": 50,
+      "maxProgressVal": 100
     }
   }
 }
