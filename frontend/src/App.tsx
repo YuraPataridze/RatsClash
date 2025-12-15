@@ -4,39 +4,49 @@ import {useState, useEffect} from 'react'
 
 
 export default function App() {
-  const [user_name, _set_user_name] = useState<string>("pataridze19") // change in future
+  const [user_name, _set_user_name] = useState<string>("") // change in future
     
   //in the furute will work changing this state(with localstorage)
-  const [entered, _setEntered] = useState<boolean>(true)
+  const [entered, _setEntered] = useState<boolean>(false)
 
   //!-ENTER ACCOUNT-!//
   const [enterCode, setEnterCode] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
-  async function handleEnter() { // все данные, полученные с бека, мы будем передавать в playground comp через props или через localstorage или cokie
+  async function handleEnter() { // (не актул уже)все данные, полученные с бека, мы будем передавать в playground comp через props или через localstorage или cokie
       setLoading(true)
 
-      if (enterCode === "" || enterCode === " ") { // dunno why doesnt work
+      if (enterCode === "" || enterCode === " ") {
           alert('Please, enter a valid user code')
           console.error('%cUser entered an invalid code cointains "" or " "', 'color: red')
           return
       }
 
-      console.log(`%csending backdend user code: ${enterCode}`, "color: green")
+      console.log(`%csending backdend user code: ${enterCode}`, "color: white")
       try {
         const response = await fetch('http://localhost:3000/api/enter', {
             method: 'POST',                      
             headers: {
                   'Content-Type': 'application/json',
               },
-              body: JSON.stringify({user_code: enterCode}) // <- !!
+              body: JSON.stringify({user_code: enterCode})
           })                  
           const gottent_from_back_data = await response.json()
           if (!response.ok) {
               console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
           }
-            console.log(`%c${gottent_from_back_data.message}`, 'color: yellow')
-          console.log(`Coins of ${gottent_from_back_data.user_code} are ${gottent_from_back_data.coins}`)//as test showing coins in console
+          console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
+          //console.log(`Coins of user ${gottent_from_back_data.user_code} are ${gottent_from_back_data.coins}`)//as test showing coins in console
+
+          // !setting fetched from back data!
+          _set_user_name(gottent_from_back_data.user_name)
+          setCoins(gottent_from_back_data.coins)
+          setEarnPerClick(gottent_from_back_data.earnPerClick)
+          setCoinsToLevUp(gottent_from_back_data.coinsToLevUp)
+          _setCoinsPerSec(gottent_from_back_data.coinsToLevUp)
+          _setLevel(gottent_from_back_data.level)
+          setProgressBarVal(gottent_from_back_data.progressBarVal)
+          _setMaxProgressVal(gottent_from_back_data._maxProgressVal)
         } catch (e) {
             setLoading(false)
             console.error(`%cUNKNOW ERROR: ${e}`, 'color: red')

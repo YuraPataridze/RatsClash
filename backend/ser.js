@@ -37,7 +37,7 @@ app.post('/api/enter', (req, res) => {
 
     res.json({
         status: 'ok',
-        user_code,
+        user_name: user_code,
         coins: user.coins,
         earnPerClick: user.earnPerClick,
         coinsToLevUp: user.coinsToLevUp,
