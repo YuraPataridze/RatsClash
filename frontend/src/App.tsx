@@ -104,27 +104,8 @@ export default function App() {
     }, [coins])
       // fetch data
     const [loadingPF, setLoadingPF] = useState<boolean>(false)
-    
-    useEffect(() => {
-        async function fetchCoins() {
-            setLoadingPF(true)
-            try {
-              const response = await fetch('http://localhost:3000/api/coins')
-              if (!response.ok) throw new Error('Backend HTTP error')
-              const data = await response.json()
-              console.log(data)
-              alert('Successfuly fetched data from backend')
-          } catch (err) {
-              alert('You caught unknow error. More details see in browser console')
-              console.error(err)
-              setLoadingPF(false)
-              } finally {
-                setLoadingPF(false)
-              }
-            }
-    
-            fetchCoins()
-        }, [])
+  
+    //here will be func that each 10s data fly on back and there update 'emselfs
 
     return (
       <div className='App'>
