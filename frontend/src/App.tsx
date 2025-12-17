@@ -7,7 +7,19 @@ export default function App() {
   const [user_name, _set_user_name] = useState<string>("") // change in future
     
   //in the furute will work changing this state(with localstorage)
-  const [entered, _setEntered] = useState<boolean>(false)
+  const [isEntered, _setIsEntered] = useState<string>('false')
+
+  useEffect(() => {
+    /*_setIsEntered(String(localStorage.getItem('isEntered')))*/
+
+    if (localStorage.getItem('isEntered') === 'true') {
+        _setIsEntered('true')
+    } else if (localStorage.getItem('isEntered') === 'false') {
+        _setIsEntered('false')
+    }
+
+    console.log('setted isEntered as ' + isEntered)
+  }, [isEntered])
 
   //!-ENTER ACCOUNT-!//
   const [enterCode, setEnterCode] = useState<string>('')
@@ -36,11 +48,8 @@ export default function App() {
               console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
           }
           console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
-          _setEntered(true)
-          //console.log(`Coins of user ${gottent_from_back_data.user_code} are ${gottent_from_back_data.coins}`)//as test showing coins in console
-          
-          // debug
-          console.log(gottent_from_back_data)
+          //_setIsEntered('true')
+          localStorage.setItem('isEntered', 'true')
 
           // !setting fetched from back data!
           _set_user_name(String(gottent_from_back_data.user_name))
@@ -112,7 +121,7 @@ export default function App() {
         <div className="header">
           <Header userName={user_name}/>
         </div>
-        {entered ? (
+        {isEntered === 'true' ? (
           <>
             <div className="play-field">
               <>
