@@ -1,31 +1,47 @@
+// LS = localstorage
+
 import Header from './comp/Header/Header'
 import './App.css'
 import {useState, useEffect} from 'react'
 
 
 export default function App() {
-  const [user_name, _set_user_name] = useState<string>("") // change in future
-    
-  //in the furute will work changing this state(with localstorage)
-  const [isEntered, _setIsEntered] = useState<string>('false')
+    const [user_name, _set_user_name] = useState<string>("") // change in future WITH LOCALSTORAGE
+        
+    //in the furute will work changing this state(with localstorage)
+    const [isEntered, _setIsEntered] = useState<string>('false')
 
-  useEffect(() => {
-    /*_setIsEntered(String(localStorage.getItem('isEntered')))*/
+    useEffect(() => {
+        /*_setIsEntered(String(localStorage.getItem('isEntered')))*/
 
-    if (localStorage.getItem('isEntered') === 'true') {
-        _setIsEntered('true')
-    } else if (localStorage.getItem('isEntered') === 'false') {
-        _setIsEntered('false')
-    }
+        if (localStorage.getItem('isEntered') === 'true') {
+            _setIsEntered('true')
+        } else if (localStorage.getItem('isEntered') === 'false') {
+            _setIsEntered('false')
+        }
 
-    console.log('setted isEntered as ' + isEntered)
-  }, [isEntered])
+        console.log('setted isEntered as' + isEntered)
+    }, [isEntered])
 
-  //!-ENTER ACCOUNT-!//
-  const [enterCode, setEnterCode] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+    //!-ENTER ACCOUNT-!//
+    const [enterCode, setEnterCode] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false)
 
-  async function handleEnter() { // (не актул уже)все данные, полученные с бека, мы будем передавать в playground comp через props или через localstorage или cokie
+    // setting user name in LS
+    useEffect(() => {
+        /*if (!user_name) {
+            _set_user_name('Unknow name')
+            return
+        }*/
+        _set_user_name(String(localStorage.getItem('userName')))
+    }, [])
+
+    // test
+    useEffect(() => {
+        console.log(user_name)
+    })
+
+  async function handleEnter() {
       setLoading(true)
 
       if (enterCode === "" || enterCode === " ") {
@@ -52,7 +68,10 @@ export default function App() {
           localStorage.setItem('isEntered', 'true')
 
           // !setting fetched from back data!
-          _set_user_name(String(gottent_from_back_data.user_name))
+
+          //_set_user_name(String(gottent_from_back_data.user_name))
+          localStorage.setItem('userName', gottent_from_back_data.user_name)
+
           setCoins(Number(gottent_from_back_data.coins))
           setEarnPerClick(Number(gottent_from_back_data.earnPerClick))
           setCoinsToLevUp(Number(gottent_from_back_data.coinsToLevUp))
