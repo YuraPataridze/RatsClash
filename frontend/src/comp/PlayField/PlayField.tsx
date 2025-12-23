@@ -1,4 +1,4 @@
-// to-do: add localstorage for all states here; then connect localstorage with backend and databasa
+// to-do: add localstorage for all states here
 
 import { useEffect, useState } from "react"
 import "./PlayFIeld.css"
@@ -19,7 +19,7 @@ export default function PlayField() {
 
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
-    const [_maxProgressVal, _setMaxProgressVal] = useState<number>(coins)
+    const [maxProgressVal, _setMaxProgressVal] = useState<number>(coins)
 
     // manage click fun
     function manageClick() {
