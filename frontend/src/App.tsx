@@ -65,35 +65,35 @@ export default function App() {
                 },
                 body: JSON.stringify({user_code: enterCode})
             })
-            const gottent_from_back_data = await response.json()
+            const gotten_from_back_data = await response.json()
             if (!response.ok) {
-                console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
+                console.error(`Something's wrong. Backend said: ${gotten_from_back_data.message} || ${gotten_from_back_data.status}`)
             }
-            if (gottent_from_back_data.status === 404 || gottent_from_back_data.message === 'User NOT FOUND') {
+            if (gotten_from_back_data.status === 404 || gotten_from_back_data.message === 'User NOT FOUND') {
                 alert('User data NOT FOUND.')
                 return
             }
-            console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
+            console.log(`%cSuccessfully got data from server. Message: ${gotten_from_back_data.message}`, 'color: yellow')
             //_setIsEntered('true')
             localStorage.setItem('isEntered', 'true')
 
             // !setting fetched from back data!
 
-            //_set_user_name(String(gottent_from_back_data.user_name))
-            localStorage.setItem('userName', gottent_from_back_data.user_name)
+            //_set_user_name(String(gotten_from_back_data.user_name))
+            localStorage.setItem('userName', gotten_from_back_data.user_name)
 
-            setCoins(Number(gottent_from_back_data.coins))
-            setEarnPerClick(Number(gottent_from_back_data.earnPerClick))
-            setCoinsToLevUp(Number(gottent_from_back_data.coinsToLevUp))
-            _setCoinsPerSec(Number(gottent_from_back_data.coinsToLevUp))
-            _setLevel(Number(gottent_from_back_data.level))
-            setProgressBarVal(Number(gottent_from_back_data.progressBarVal))
-            _setMaxProgressVal(Number(gottent_from_back_data._maxProgressVal))
+            setCoins(Number(gotten_from_back_data.coins))
+            setEarnPerClick(Number(gotten_from_back_data.earnPerClick))
+            setCoinsToLevUp(Number(gotten_from_back_data.coinsToLevUp))
+            _setCoinsPerSec(Number(gotten_from_back_data.coinsToLevUp))
+            _setLevel(Number(gotten_from_back_data.level))
+            setProgressBarVal(Number(gotten_from_back_data.progressBarVal))
+            _setMaxProgressVal(Number(gotten_from_back_data._maxProgressVal))
 
             //show popup
             //localStorage.setItem('showedPopup', 'true')
 
-            alert(`Successfully entered account ${gottent_from_back_data.user_name}. Pls, RESTART THE PAGE to continue`)
+            alert(`Successfully entered account ${gotten_from_back_data.user_name}. Pls, RESTART THE PAGE to continue`)
         } catch (e) {
             setLoading(false)
             console.error(`%cUNKNOW ERROR: ${e}`, 'color: red')
