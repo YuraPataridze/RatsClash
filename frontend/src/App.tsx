@@ -2,12 +2,12 @@
 
 import Header from './comp/Header/Header'
 import './App.css'
-import {useState, useEffect} from 'react'
+import {useEffect, useState} from 'react'
 
 
 export default function App() {
     const [user_name, _set_user_name] = useState<string>("") // change in future WITH LOCALSTORAGE
-        
+
     //in the furute will work changing this state(with localstorage)
     const [isEntered, _setIsEntered] = useState<string>('false')
 
@@ -36,49 +36,64 @@ export default function App() {
         _set_user_name(String(localStorage.getItem('userName')))
     }, [])
 
-    // test
+    // show popup
+    const [showedPopup, setShowedPopup] = useState<boolean>(false)
+
     useEffect(() => {
-        console.log(user_name)
-    })
+        if (localStorage.getItem('showedPopup') === 'true') {
+            setShowedPopup(true)
+        } else if (localStorage.getItem('showedPopup') === 'false') {
+            setShowedPopup(false)
+        }
+    }, [showedPopup])
 
-  async function handleEnter() {
-      setLoading(true)
+    async function handleEnter() {
+        setLoading(true)
 
-      if (enterCode === "" || enterCode === " ") {
-          alert('Please, enter a valid user code')
-          console.error('%cUser entered an invalid code cointains "" or " "', 'color: red')
-          return
-      }
+        if (enterCode === "" || enterCode === " ") {
+            alert('Please, enter a valid user code')
+            console.error('%cUser entered an invalid code cointains "" or " "', 'color: red')
+            return
+        }
 
-      console.log(`%csending backdend user code: ${enterCode}`, "color: white")
-      try {
-        const response = await fetch('http://localhost:3000/api/enter', {
-            method: 'POST',                      
-            headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({user_code: enterCode})
-          })                  
-          const gottent_from_back_data = await response.json()
-          if (!response.ok) {
-              console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
-          }
-          console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
-          //_setIsEntered('true')
-          localStorage.setItem('isEntered', 'true')
+        console.log(`%csending backdend user code: ${enterCode}`, "color: white")
+        try {
+            const response = await fetch('http://localhost:3000/api/enter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({user_code: enterCode})
+            })
+            const gottent_from_back_data = await response.json()
+            if (!response.ok) {
+                console.error(`Something's wrong. Backend said: ${gottent_from_back_data.message} || ${gottent_from_back_data.status}`)
+            }
+            if (gottent_from_back_data.status === 404 || gottent_from_back_data.message === 'User NOT FOUND') {
+                alert('User data NOT FOUND.')
+                return
+            }
+            console.log(`%cSuccessfully got data from server. Message: ${gottent_from_back_data.message}`, 'color: yellow')
+            //_setIsEntered('true')
+            localStorage.setItem('isEntered', 'true')
 
-          // !setting fetched from back data!
+            // !setting fetched from back data!
 
-          //_set_user_name(String(gottent_from_back_data.user_name))
-          localStorage.setItem('userName', gottent_from_back_data.user_name)
+            //_set_user_name(String(gottent_from_back_data.user_name))
+            localStorage.setItem('userName', gottent_from_back_data.user_name)
 
-          setCoins(Number(gottent_from_back_data.coins))
-          setEarnPerClick(Number(gottent_from_back_data.earnPerClick))
-          setCoinsToLevUp(Number(gottent_from_back_data.coinsToLevUp))
-          _setCoinsPerSec(Number(gottent_from_back_data.coinsToLevUp))
-          _setLevel(Number(gottent_from_back_data.level))
-          setProgressBarVal(Number(gottent_from_back_data.progressBarVal))
-          _setMaxProgressVal(Number(gottent_from_back_data._maxProgressVal))
+            setCoins(Number(gottent_from_back_data.coins))
+            setEarnPerClick(Number(gottent_from_back_data.earnPerClick))
+            setCoinsToLevUp(Number(gottent_from_back_data.coinsToLevUp))
+            _setCoinsPerSec(Number(gottent_from_back_data.coinsToLevUp))
+            _setLevel(Number(gottent_from_back_data.level))
+            setProgressBarVal(Number(gottent_from_back_data.progressBarVal))
+            _setMaxProgressVal(Number(gottent_from_back_data._maxProgressVal))
+
+            //show popup
+            //localStorage.setItem('showedPopup', 'true')
+
+            alert(`Successfully entered account ${gottent_from_back_data.user_name}. Pls, RESTART THE PAGE to continue`)
         } catch (e) {
             setLoading(false)
             console.error(`%cUNKNOW ERROR: ${e}`, 'color: red')
@@ -88,130 +103,149 @@ export default function App() {
     }
 
     //!-PLAYFIELD-!//
-    
+
     // coins state
     const [coins, setCoins] = useState<number>(
-      Number(localStorage.getItem("coins")) || 0
+        Number(localStorage.getItem("coins")) || 0
     )
     const [earnPerClick, setEarnPerClick] = useState<number>(1)
     const [coinsToLevUp, setCoinsToLevUp] = useState<number>(100)
     const [coinsPerSec, _setCoinsPerSec] = useState<number>(0)
-    
-     useEffect(() => {
-      localStorage.setItem("coins", coins.toString())
+
+    useEffect(() => {
+        localStorage.setItem("coins", coins.toString())
     }, [coins])
 
     // level  
     const [_level, _setLevel] = useState<number>()
-    
+
     // progress-bar states
     const [progressBarVal, setProgressBarVal] = useState<number>(coins)
     const [_maxProgressVal, _setMaxProgressVal] = useState<number>(coins)
-    
+
     // manage click func
     function manageClick() {
         // test
         console.log("CLICKED +1")
-    
+
         //setCoins(Number(coins) + earnPerClick)
         //setProgressBarVal(Number(coins) + 1)
 
         setCoins(prev => prev + earnPerClick)
-      }
+    }
 
     useEffect(() => {
-      setProgressBarVal(coins)
+        setProgressBarVal(coins)
     }, [coins])
 
     useEffect(() => {
-      if (coins >= coinsToLevUp) {
-        setCoinsToLevUp(prev => prev + 100)
-        setEarnPerClick(prev => prev + 1)
-        console.log('leveled up')
-      }
+        if (coins >= coinsToLevUp) {
+            setCoinsToLevUp(prev => prev + 100)
+            setEarnPerClick(prev => prev + 1)
+            console.log('leveled up')
+        }
     }, [coins])
-      // fetch data
+
     const [loadingPF, setLoadingPF] = useState<boolean>(false)
-  
+
+    // send new user data to backend
+    useEffect(() => {
+        // делаем fetch to /api/game/update с PUT запросом.
+    }, [coins, earnPerClick, coinsToLevUp, coinsPerSec, _level])
+
+    // get user data from backend
+    useEffect(() => {
+        // делаем fetch to /api/coins/get, получаем оттуда данные, помещаем эти данные в useStates.
+    }, [])
+
     //here will be func that each 10s data fly on back and there update 'emselfs
 
     return (
-      <div className='App'>
-        <div className="header">
-          <Header userName={user_name}/>
+        <div className='App'>
+            {/*{!showedPopup ? (
+                <div className='popup'>
+                    <div className="popup-bg"></div>
+                    <div className="popup-content">
+                        <AttentionPopup/>
+                    </div>
+                </div>
+            ) : (null)}*/}
+            <div className="header">
+                <Header userName={user_name}/>
+            </div>
+            {isEntered === 'true' ? (
+                <>
+                    <div className="play-field">
+                        <>
+                            <div className="bar">
+                                <div className="bar-content">
+                                    <div className="bar-tab">
+                                        <p>Earn per click</p>
+                                        <div className="coin">
+                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <p>{earnPerClick}</p>
+                                        </div>
+                                    </div>
+                                    <div className="bar-tab">
+                                        <p>Coins level up</p>
+                                        <div className="coin">
+                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <p>{coinsToLevUp}</p>
+                                        </div>
+                                    </div>
+                                    <div className="bar-tab">
+                                        <p>Auto earn p/sec</p>
+                                        <div className="coin">
+                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <p>{coinsPerSec}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="coins">
+                                {loading ? (
+                                    <>
+                                        Loading
+                                    </>
+                                ) : (
+                                    <>
+                                        <img src="/assets/coinICON.svg" alt="coins"/>
+                                        <h1>{coins}</h1>
+                                    </>
+                                )}
+                            </div>
+                            <div className="progress-bar">
+                                <progress value={progressBarVal} max={coinsToLevUp}></progress>
+                            </div>
+                            <div className="click-btn">
+                                <div onClick={manageClick} className="button">
+                                    <img src="/assets/coinICON.svg" alt="click-btn"/>
+                                </div>
+                            </div>
+                        </>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="window">
+                        <div className="content">
+                            <h2>Enter Account</h2>
+                            <div className="form">
+                                <div className="form-content">
+                                    <input value={enterCode} onChange={(e) => setEnterCode(e.target.value)}
+                                           type="password" id="psw-input" placeholder="User unique code"/>
+                                    <button onClick={handleEnter}>Enter!</button>
+                                    {loadingPF ? (
+                                        <>
+                                            <div className="loader"></div>
+                                        </>
+                                    ) : (null)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
-        {isEntered === 'true' ? (
-          <>
-            <div className="play-field">
-              <>
-            <div className="bar">
-                <div className="bar-content">
-                    <div className="bar-tab">
-                        <p>Earn per click</p>
-                        <div className="coin">
-                            <img src="/assets/coinICON.svg" alt="coin" />
-                            <p>{earnPerClick}</p>
-                        </div>
-                    </div>
-                    <div className="bar-tab">
-                        <p>Coins level up</p>
-                        <div className="coin">
-                            <img src="/assets/coinICON.svg" alt="coin" />
-                            <p>{coinsToLevUp}</p>
-                        </div>
-                    </div>
-                    <div className="bar-tab">
-                        <p>Auto earn p/sec</p>
-                        <div className="coin">
-                            <img src="/assets/coinICON.svg" alt="coin" />
-                            <p>{coinsPerSec}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="coins">
-                {loading ? (
-                    <>
-                        Loading
-                    </>
-                ) : (
-                    <>
-                        <img src="/assets/coinICON.svg" alt="coins" />
-                        <h1>{coins}</h1>
-                    </>
-                )}
-            </div>
-            <div className="progress-bar">
-                <progress value={progressBarVal} max={coinsToLevUp}></progress>
-            </div>
-            <div className="click-btn">
-                <div onClick={manageClick} className="button">
-                    <img src="/assets/coinICON.svg" alt="click-btn" />
-                </div>
-            </div>
-        </>
-            </div>
-          </>
-        ) : (
-          <>
-              <div className="window">
-                  <div className="content">
-                      <h2>Enter Account</h2>
-                      <div className="form">
-                          <div className="form-content">
-                              <input value={enterCode} onChange={(e) => setEnterCode(e.target.value)} type="password" id="psw-input" placeholder="User unique code" />
-                              <button onClick={handleEnter}>Enter!</button>
-                              {loadingPF ? (
-                                  <>
-                                      <div className="loader"></div>
-                                  </>
-                              ) : (null)}
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </>
-        )}
-      </div>
     )
 }
