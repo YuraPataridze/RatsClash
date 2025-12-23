@@ -48,7 +48,7 @@ app.post('/api/enter', (req, res) => {
     })
 })
 
-// get data
+// get from here user data
 app.post('/api/coins/get', (req, res) => {
     const { user_code } = req.body
 
@@ -74,7 +74,7 @@ app.post('/api/coins/get', (req, res) => {
     })
 })
 
-// update data
+// send here user data
 app.post('/api/game/update', (req, res) => {
     const {
         user_code,
@@ -88,14 +88,14 @@ app.post('/api/game/update', (req, res) => {
     } = req.body
 
     if (!user_code) {
-        return res.status(400).json({ message: 'Нет user_code' })
+        return res.status(400).json({ message: 'No user_code' })
     }
 
     const db = readDB()
     const user = db.users[user_code]
 
     if (!user) {
-        return res.status(401).json({ message: 'Неверный код' })
+        return res.status(401).json({ message: 'Invalid code' })
     }
 
     if (typeof coins === 'number') user.coins = coins
