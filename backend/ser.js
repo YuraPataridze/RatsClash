@@ -22,17 +22,17 @@ function writeDB(db) {
 
 // authorisation
 app.post('/api/enter', (req, res) => {
-    const { user_code } = req.body
+    const {user_code} = req.body
 
     if (!user_code) {
-        return res.status(400).json({ message: 'Invalid user code' })
+        return res.status(400).json({message: 'Invalid user code'})
     }
 
     const db = readDB()
     const user = db.users[user_code]
 
     if (!user) {
-        return res.status(404).json({ message: 'User NOT FOUND' })
+        return res.status(404).json({message: 'User NOT FOUND'})
     }
 
     res.json({
@@ -49,18 +49,18 @@ app.post('/api/enter', (req, res) => {
 })
 
 // get from here user data
-app.post('/api/coins/get', (req, res) => {
-    const { user_code } = req.body
+app.post('/api/user_data/get', (req, res) => {
+    const {user_code} = req.body
 
     if (!user_code || typeof user_code !== 'string') {
-        return res.status(400).json({ message: 'Неверный код' })
+        return res.status(400).json({message: 'Invalid code'})
     }
 
     const db = readDB()
     const user = db.users[user_code]
 
     if (!user) {
-        return res.status(401).json({ message: 'Неверный код' })
+        return res.status(404).json({message: 'User not found'})
     }
 
     res.json({
@@ -88,14 +88,14 @@ app.post('/api/game/update', (req, res) => {
     } = req.body
 
     if (!user_code) {
-        return res.status(400).json({ message: 'No user_code' })
+        return res.status(400).json({message: 'No user_code'})
     }
 
     const db = readDB()
     const user = db.users[user_code]
 
     if (!user) {
-        return res.status(401).json({ message: 'Invalid code' })
+        return res.status(401).json({message: 'Invalid code'})
     }
 
     if (typeof coins === 'number') user.coins = coins
