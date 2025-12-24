@@ -1,7 +1,7 @@
 {
   "users": {
-    "1234": {
-      "coins": 50,
+    "pataridze": {
+      "coins": 60,
       "earnPerClick": 1,
       "coinsToLevUp": 100,
       "coinsPerSec": 0,
