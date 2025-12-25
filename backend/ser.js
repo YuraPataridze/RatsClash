@@ -75,7 +75,7 @@ app.post('/api/user_data/get', (req, res) => {
 })
 
 // send here user data
-app.post('/api/game/update', (req, res) => {
+app.put('/api/game/update', (req, res) => {
     const {
         user_code,
         coins,
@@ -95,7 +95,7 @@ app.post('/api/game/update', (req, res) => {
     const user = db.users[user_code]
 
     if (!user) {
-        return res.status(401).json({message: 'Invalid code'})
+        return res.status(404).json({message: 'User not found'})
     }
 
     if (typeof coins === 'number') user.coins = coins
@@ -109,8 +109,7 @@ app.post('/api/game/update', (req, res) => {
     writeDB(db)
 
     res.json({
-        status: 'success',
-        user
+        status: 'success'
     })
 })
 
