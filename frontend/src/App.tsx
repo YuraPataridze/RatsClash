@@ -185,7 +185,7 @@ export default function App() {
                         }
 
                         console.log('%cSuccessfully put in backend new user data', 'background: #25fa00;\n' +
-                            'background: linear-gradient(90deg,rgba(37, 250, 0, 1) 35%, rgba(0, 208, 250, 1) 62%)')
+                            'background: linear-gradient(90deg,rgba(37, 250, 0, 1) 35%, rgba(0, 208, 250, 1) 62%); color: black')
                     } catch (e) {
                         alert('Something went wrong\nCheck browser console for more')
                         console.log(`%cCought unknow error:\n${e}`, 'background: #fa6800;' +
