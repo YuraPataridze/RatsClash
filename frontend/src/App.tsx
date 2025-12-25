@@ -29,10 +29,10 @@ export default function App() {
 
     // setting user name in LS
     useEffect(() => {
-        /*if (!user_name) {
+        if (!user_name) {
             _set_user_name('Unknow name')
             return
-        }*/
+        }
         _set_user_name(String(localStorage.getItem('userName')))
     }, [])
 
