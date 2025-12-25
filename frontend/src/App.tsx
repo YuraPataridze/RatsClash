@@ -151,48 +151,55 @@ export default function App() {
     // send new user data to backend
     useEffect(() => {
         // делаем fetch to /api/game/update с PUT запросом.
-        if (isEntered === 'true') {
-            async function putUserDatainBackend() {
-                try {
-                    const response = await fetch('http://localhost:3000/api/game/update', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            user_code: localStorage.getItem('userName'),
-                            coins: coins,
-                            earnPerClick: earnPerClick,
-                            coinsToLevUp: coinsToLevUp,
-                            coinsPerSec: coinsPerSec,
-                            level: _level,
-                            progressBarVal: progressBarVal,
-                            maxProgressVal: _maxProgressVal,
+
+        const putFetching = setTimeout(() => {
+            if (isEntered === 'true') {
+                async function putUserDatainBackend() {
+                    try {
+                        const response = await fetch('http://localhost:3000/api/game/update', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                user_code: localStorage.getItem('userName'),
+                                coins: coins,
+                                earnPerClick: earnPerClick,
+                                coinsToLevUp: coinsToLevUp,
+                                coinsPerSec: coinsPerSec,
+                                level: _level,
+                                progressBarVal: progressBarVal,
+                                maxProgressVal: _maxProgressVal,
+                            })
                         })
-                    })
 
-                    const gotten_data = await response.json()
+                        const gotten_data = await response.json()
 
-                    if (!response.ok) {
-                        alert(gotten_data.message || 'Error. Try again.')
-                        console.log('%cAfter putting new user data in backend we got error: ' +
-                            gotten_data.message, 'background: #fa6800;' +
+                        if (!response.ok) {
+                            alert(gotten_data.message || 'Error. Try again.')
+                            console.log('%cAfter putting new user data in backend we got error: ' +
+                                gotten_data.message, 'background: #fa6800;' +
+                                'background: linear-gradient(90deg,rgba(250, 104, 0, 1) 39%, rgba(225, 250, 0, 1) 73%);' +
+                                'color: white; font-size: 30px')
+                            return
+                        }
+
+                        console.log('%cSuccessfully put in backend new user data', 'background: #25fa00;\n' +
+                            'background: linear-gradient(90deg,rgba(37, 250, 0, 1) 35%, rgba(0, 208, 250, 1) 62%); color: black')
+                    } catch (e) {
+                        alert('Something went wrong\nCheck browser console for more')
+                        console.log(`%cCought unknow error:\n${e}`, 'background: #fa6800;' +
                             'background: linear-gradient(90deg,rgba(250, 104, 0, 1) 39%, rgba(225, 250, 0, 1) 73%);' +
                             'color: white; font-size: 30px')
-                        return
                     }
-
-                    console.log('%cSuccessfully put in backend new user data', 'background: #25fa00;\n' +
-                        'background: linear-gradient(90deg,rgba(37, 250, 0, 1) 35%, rgba(0, 208, 250, 1) 62%)')
-                } catch (e) {
-                    alert('Something went wrong\nCheck browser console for more')
-                    console.log(`%cCought unknow error:\n${e}`, 'background: #fa6800;' +
-                        'background: linear-gradient(90deg,rgba(250, 104, 0, 1) 39%, rgba(225, 250, 0, 1) 73%);' +
-                        'color: white; font-size: 30px')
                 }
-            }
 
-            putUserDatainBackend()
+                putUserDatainBackend()
+            }
+        }, 500)
+
+        return function () {
+            clearTimeout(putFetching)
         }
     }, [coins, earnPerClick, coinsToLevUp, coinsPerSec, _level, progressBarVal])
 
