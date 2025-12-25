@@ -40,30 +40,6 @@ export default function PlayField() {
         }
     }
 
-    // fetch data
-    const [loading, setLoading] = useState<boolean>(false)
-
-    useEffect(() => {
-        async function fetchCoins() {
-            setLoading(true)
-            try {
-                const response = await fetch('http://localhost:3000/api/coins')
-                if (!response.ok) throw new Error('Backend HTTP error')
-                const data = await response.json()
-                console.log(data)
-                alert('Successfuly fetched data from backend')
-            } catch (err) {
-                alert('You caught unknow error. More details see in browser console')
-                console.error(err)
-                setLoading(false)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchCoins()
-    }, [])
-
     return (
         <>
             <div className="bar">
@@ -92,16 +68,8 @@ export default function PlayField() {
                 </div>
             </div>
             <div className="coins">
-                {loading ? (
-                    <>
-                        Loading
-                    </>
-                ) : (
-                    <>
-                        <img src="/assets/coinICON.svg" alt="coins" />
-                        <h1>{coins}</h1>
-                    </>
-                )}
+                <img src="/assets/coinICON.svg" alt="coins" />
+                <h1>{coins}</h1>
             </div>
             <div className="progress-bar">
                 <progress value={progressBarVal} max={coinsToLevUp}></progress>

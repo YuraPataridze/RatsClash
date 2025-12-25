@@ -1,50 +1,119 @@
-const express = require('express');
-const fs = require('fs'); // Модуль для работы с файлами
-const cors = require('cors'); // Модуль для разрешения запросов с браузера
-const path = require('path');
+// settings
+const express = require('express')
+const fs = require('fs')
+const cors = require('cors')
+const path = require('path')
 
-const app = express();
-const PORT = 3000; // Порт, на котором будет работать сервер
-const DB_FILE = path.join(__dirname, 'db.json');
+const app = express()
+const PORT = 3000
+const DB_FILE = path.join(__dirname, 'db.json')
 
-// --- НАСТРОЙКИ ---
-app.use(cors()); // Разрешаем фронтенду стучаться сюда
-app.use(express.json()); // Учим сервер понимать JSON, который придет с фронта
+app.use(cors())
+app.use(express.json())
 
-// если файла нет, создадим его с 0 монет
-if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ 
-        users: [
-        { username: "admin", password: "111", coins: 999999 }, // Богатый админ
-        { username: "player", password: "123", coins: 0 }      // Обычный игрок
-    ]
-     }));
+// read db
+function readDB() {
+    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'))
 }
 
-// Фронтенд делает запрос сюда, чтобы узнать текущий счет
-app.get('/api/coins', (req, res) => {
-    // Превращаем текст в объект JS и отправляем
-    const json = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-    res.json(json);
-});
+function writeDB(db) {
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2))
+}
 
-// Фронтенд присылает сюда новое количество монет
-app.post('/api/coins', (req, res) => {
-    const { coins } = req.body; // Получаем число из запроса
+// authorisation
+app.post('/api/enter', (req, res) => {
+    const {user_code} = req.body
 
-    if (typeof coins !== 'number') {
-        return res.status(400).json({ error: 'Нужно прислать число!' });
+    if (!user_code) {
+        return res.status(400).json({message: 'Invalid user code'})
     }
 
-    // 1. Записываем новые данные в файл
-    fs.writeFileSync(DB_FILE, JSON.stringify({ coins: coins }));
-    
-    // 2. Отвечаем, что всё ок
-    console.log(`Сохранено монет: ${coins}`);
-    res.json({ status: 'success', saved: coins });
-});
+    const db = readDB()
+    const user = db.users[user_code]
 
-// --- ЗАПУСК ---
+    if (!user) {
+        return res.status(404).json({message: 'User NOT FOUND'})
+    }
+
+    res.json({
+        status: 'ok',
+        user_name: user_code,
+        coins: user.coins,
+        earnPerClick: user.earnPerClick,
+        coinsToLevUp: user.coinsToLevUp,
+        coinsPerSec: user.coinsPerSec,
+        level: user.level,
+        progressBarVal: user.progressBarVal,
+        maxProgressVal: user.maxProgressVal
+    })
+})
+
+// get from here user data
+app.post('/api/user_data/get', (req, res) => {
+    const {user_code} = req.body
+
+    if (!user_code || typeof user_code !== 'string') {
+        return res.status(400).json({message: 'Invalid code'})
+    }
+
+    const db = readDB()
+    const user = db.users[user_code]
+
+    if (!user) {
+        return res.status(404).json({message: 'User not found'})
+    }
+
+    res.json({
+        coins: user.coins,
+        earnPerClick: user.earnPerClick,
+        coinsToLevUp: user.coinsToLevUp,
+        coinsPerSec: user.coinsPerSec,
+        level: user.level,
+        progressBarVal: user.progressBarVal,
+        maxProgressVal: user.maxProgressVal
+    })
+})
+
+// send here user data
+app.put('/api/game/update', (req, res) => {
+    const {
+        user_code,
+        coins,
+        earnPerClick,
+        coinsToLevUp,
+        coinsPerSec,
+        level,
+        progressBarVal,
+        maxProgressVal
+    } = req.body
+
+    if (!user_code) {
+        return res.status(400).json({message: 'No user_code'})
+    }
+
+    const db = readDB()
+    const user = db.users[user_code]
+
+    if (!user) {
+        return res.status(404).json({message: 'User not found'})
+    }
+
+    if (typeof coins === 'number') user.coins = coins
+    if (typeof earnPerClick === 'number') user.earnPerClick = earnPerClick
+    if (typeof coinsToLevUp === 'number') user.coinsToLevUp = coinsToLevUp
+    if (typeof coinsPerSec === 'number') user.coinsPerSec = coinsPerSec
+    if (typeof level === 'number') user.level = level
+    if (typeof progressBarVal === 'number') user.progressBarVal = progressBarVal
+    if (typeof maxProgressVal === 'number') user.maxProgressVal = maxProgressVal
+
+    writeDB(db)
+
+    res.json({
+        status: 'success'
+    })
+})
+
+// start
 app.listen(PORT, () => {
-    console.log(`🚀 Сервер работает на http://localhost:${PORT}`);
-});
+    console.log(`🚀 Server running at http://localhost:${PORT}`)
+})

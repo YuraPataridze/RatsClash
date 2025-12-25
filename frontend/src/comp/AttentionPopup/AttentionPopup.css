@@ -1,0 +1,22 @@
+.attention-popup {
+    display: flex;
+    justify-content: center;
+}
+
+.attention-popup-window {
+    padding: 1rem;
+    background-color: #32363c;
+    border-radius: 15px;
+    color: white;
+}
+
+.attention-popup-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.attention-popup-content p {
+    text-align: center;
+    font-size: 20px;
+}
