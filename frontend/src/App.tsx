@@ -85,7 +85,7 @@ export default function App() {
             setCoins(Number(gotten_from_back_data.coins))
             setEarnPerClick(Number(gotten_from_back_data.earnPerClick))
             setCoinsToLevUp(Number(gotten_from_back_data.coinsToLevUp))
-            _setCoinsPerSec(Number(gotten_from_back_data.coinsToLevUp))
+            _setCoinsPerSec(Number(gotten_from_back_data.coinsPerSec))
             _setLevel(Number(gotten_from_back_data.level))
             setProgressBarVal(Number(gotten_from_back_data.progressBarVal))
             _setMaxProgressVal(Number(gotten_from_back_data._maxProgressVal))
@@ -157,40 +157,42 @@ export default function App() {
     useEffect(() => {
         // делаем fetch to /api/coins/get, получаем оттуда данные, помещаем эти данные в useStates
 
-        async function getUserDataFromBackend() {
-            const response = await fetch('http://localhost:3000/api/user_data/get', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({user_code: localStorage.getItem('userName')})
-            })
-            const gotten_from_back_data = await response.json()
+        if (isEntered === 'true') {
+            async function getUserDataFromBackend() {
+                const response = await fetch('http://localhost:3000/api/user_data/get', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({user_code: localStorage.getItem('userName')})
+                })
+                const gotten_from_back_data = await response.json()
 
-            if (!response.ok) {
-                console.error(`Something's wrong. Backend said: ${gotten_from_back_data.message} || ${gotten_from_back_data.status}`)
+                if (!response.ok) {
+                    console.error(`Something's wrong. Backend said: ${gotten_from_back_data.message} || ${gotten_from_back_data.status}`)
+                }
+
+                if (gotten_from_back_data.message === 'User not found') {
+                    console.error('While fetching user data from backend ' +
+                        'we collide with strange error - user NOT FOUND!')
+                    return
+                }
+
+                console.warn(gotten_from_back_data)
+
+                setCoins(Number(gotten_from_back_data.coins))
+                setEarnPerClick(Number(gotten_from_back_data.earnPerClick))
+                setCoinsToLevUp(Number(gotten_from_back_data.coinsToLevUp))
+                _setCoinsPerSec(Number(gotten_from_back_data.coinsPerSec))
+                _setLevel(Number(gotten_from_back_data.level))
+                setProgressBarVal(Number(gotten_from_back_data.progressBarVal))
+                _setMaxProgressVal(Number(gotten_from_back_data._maxProgressVal))
+
+                console.log('%cSuccessfully fetched user data from backend', 'color: green')
             }
 
-            if (gotten_from_back_data.message === 'User not found') {
-                console.error('While fetching user data from backend ' +
-                    'we collide with strange error - user NOT FOUND!')
-                return
-            }
-
-            console.warn(gotten_from_back_data)
-
-            setCoins(Number(gotten_from_back_data.coins))
-            setEarnPerClick(Number(gotten_from_back_data.earnPerClick))
-            setCoinsToLevUp(Number(gotten_from_back_data.coinsToLevUp))
-            _setCoinsPerSec(Number(gotten_from_back_data.coinsToLevUp))
-            _setLevel(Number(gotten_from_back_data.level))
-            setProgressBarVal(Number(gotten_from_back_data.progressBarVal))
-            _setMaxProgressVal(Number(gotten_from_back_data._maxProgressVal))
-
-            console.log('%cSuccessfully fetched user data from backend', 'color: green')
+            getUserDataFromBackend()
         }
-
-        getUserDataFromBackend()
     }, [])
 
     //here will be func that each 10s data fly on back and there update
