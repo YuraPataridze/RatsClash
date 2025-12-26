@@ -146,7 +146,7 @@ export default function App() {
         }
     }, [coins])
 
-    const [loadingPF, setLoadingPF] = useState<boolean>(false)
+    //const [loadingPF, setLoadingPF] = useState<boolean>(false)
 
     // send new user data to backend
     useEffect(() => {
@@ -322,11 +322,6 @@ export default function App() {
                                     <input value={enterCode} onChange={(e) => setEnterCode(e.target.value)}
                                            type="password" id="psw-input" placeholder="User unique code"/>
                                     <button onClick={handleEnter}>Enter!</button>
-                                    {loadingPF ? (
-                                        <>
-                                            <div className="loader"></div>
-                                        </>
-                                    ) : (null)}
                                 </div>
                             </div>
                         </div>
