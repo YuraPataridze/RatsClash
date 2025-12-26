@@ -93,7 +93,8 @@ export default function App() {
             //show popup
             //localStorage.setItem('showedPopup', 'true')
 
-            alert(`Successfully entered account ${gotten_from_back_data.user_name}. Pls, RESTART THE PAGE to continue`)
+            //alert(`Successfully entered account ${gotten_from_back_data.user_name}. Pls, RESTART THE PAGE to continue`)
+            window.location.reload()
         } catch (e) {
             setLoading(false)
             console.error(`%cUNKNOW ERROR: ${e}`, 'color: red')
