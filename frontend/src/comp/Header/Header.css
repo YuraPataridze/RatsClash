@@ -1,0 +1,4 @@
+.Header .header-content {
+    display: flex;
+    flex-direction: column;
+}
