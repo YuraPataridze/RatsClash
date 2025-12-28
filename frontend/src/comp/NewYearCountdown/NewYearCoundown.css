@@ -1,0 +1,28 @@
+.countdown-popup-window {
+    padding: 10px;
+    background-color: #2C2F35;
+    display: flex;
+    border: 2px solid white;
+    justify-content: center;
+}
+
+.countdown-popup-content {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.countdown-box {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.countdown-box div {
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: #1C1F24;
+    border-radius: 10px;
+}
