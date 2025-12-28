@@ -5,16 +5,16 @@ export default function NewYearCountdown() {
         <div className="countdown-popup">
             <div className="countdown-popup-window">
                 <div className="countdown-popup-content">
-                    <h1>New 2026 Year in:</h1>
+                    <h2>☃️🎄New 2026 Year in🎄☃️:</h2>
                     <div className="countdown-box">
-                        <div className="hrs">
-                            <h3>00</h3>
+                        <div>
+                            <h3 className="hrs">00</h3>
                         </div>
-                        <div className="min">
-                            <h3>00</h3>
+                        <div>
+                            <h3 className="min">00</h3>
                         </div>
-                        <div className="sec">
-                            <h3>00</h3>
+                        <div>
+                            <h3 className="sec">00</h3>
                         </div>
                     </div>
                 </div>
