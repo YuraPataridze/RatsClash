@@ -1,13 +1,13 @@
 {
   "users": {
     "pataridze": {
-      "coins": 20146,
-      "earnPerClick": 3,
-      "coinsToLevUp": 20100,
+      "coins": 2,
+      "earnPerClick": 1,
+      "coinsToLevUp": 100,
       "coinsPerSec": 0,
-      "level": 1,
-      "progressBarVal": 20146,
-      "maxProgressVal": 20146
+      "level": 0,
+      "progressBarVal": 2,
+      "maxProgressVal": 1
     }
   }
 }
