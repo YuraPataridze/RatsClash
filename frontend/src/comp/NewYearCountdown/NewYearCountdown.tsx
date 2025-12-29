@@ -10,18 +10,18 @@ export default function NewYearCountdown() {
 
     useEffect(() => {
         function updateTimer() {
-            let now = new Date()
-            let newYear = new Date(`Jan 01 ${now.getFullYear() + 1} 00:00:00`)
+            const now: Date = new Date()
+            const newYear: Date = new Date(`Jan 01 ${now.getFullYear() + 1} 00:00:00`)
 
             // в мс получаем сколько до нг
-            const msDiff = newYear - now
+            const msDiff: number = Number(newYear) - Number(now)
 
             // это мы мс просто переводим в сек
-            let totalSec = Math.floor(msDiff / 1000)
+            const totalSec: number = Math.floor(msDiff / 1000)
 
-            let hrsToNewYear = Math.floor(totalSec / 60 / 60)
-            let minToNewYear = Math.floor((totalSec % (60 * 60)) / 60)
-            let secToNewYear = Math.floor(totalSec % 60)
+            const hrsToNewYear: number = Math.floor(totalSec / 60 / 60)
+            const minToNewYear: number = Math.floor((totalSec % (60 * 60)) / 60)
+            const secToNewYear: number = Math.floor(totalSec % 60)
 
             // сетаем
             setSec(secToNewYear)
