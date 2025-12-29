@@ -27,3 +27,15 @@
     flex-direction: row;
     gap: 0.2rem;
 }
+
+.happy-year-container {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border: 2px solid white;
+}
+
+.fireworks {
+    border: 2px solid red;
+    height: 0;
+}
