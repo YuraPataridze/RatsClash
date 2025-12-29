@@ -2,7 +2,7 @@ import './NewYearCoundown.css'
 import {useEffect, useState} from "react";
 
 export default function NewYearCountdown() {
-    const [isNewYear, setIsNewYear] = useState<boolean>(false)
+    const [isNewYear, setIsNewYear] = useState<boolean>(true)
 
     const [hrs, setHrs] = useState<number>(0)
     const [min, setMin] = useState<number>(0)
