@@ -16,7 +16,7 @@ export default function NewYearCountdown() {
             // в мс получаем сколько до нг
             const msDiff = newYear - now
 
-            // это мы не мс просто переводим в сек
+            // это мы мс просто переводим в сек
             let totalSec = Math.floor(msDiff / 1000)
 
             let hrsToNewYear = Math.floor(totalSec / 60 / 60)
