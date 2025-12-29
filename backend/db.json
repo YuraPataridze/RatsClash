@@ -1,13 +1,22 @@
 {
   "users": {
-    "pataridze": {
-      "coins": 20146,
-      "earnPerClick": 3,
-      "coinsToLevUp": 20100,
+    "yura": {
+      "coins": 22,
+      "earnPerClick": 1,
+      "coinsToLevUp": 100,
       "coinsPerSec": 0,
-      "level": 1,
-      "progressBarVal": 20146,
-      "maxProgressVal": 20146
+      "level": 0,
+      "progressBarVal": 22,
+      "maxProgressVal": 20
+    },
+    "irina": {
+      "coins": 10,
+      "earnPerClick": 1,
+      "coinsToLevUp": 100,
+      "coinsPerSec": 0,
+      "level": 0,
+      "progressBarVal": 10,
+      "maxProgressVal": 7
     }
   }
 }

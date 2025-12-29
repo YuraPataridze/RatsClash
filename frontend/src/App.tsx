@@ -1,6 +1,7 @@
 // LS = localstorage
 
 import Header from './comp/Header/Header'
+import NewYearCountdown from "./comp/NewYearCountdown/NewYearCountdown.tsx"
 import './App.css'
 import {useEffect, useState} from 'react'
 
@@ -267,6 +268,12 @@ export default function App() {
                 <>
                     <div className="play-field">
                         <>
+                            <div className="ny-popup-app">
+                                <div className="ny-popup-bg"></div>
+                                <div className="ny-popup">
+                                    <NewYearCountdown/>
+                                </div>
+                            </div>
                             <div className="bar">
                                 <div className="bar-content">
                                     <div className="bar-tab">
