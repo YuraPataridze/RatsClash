@@ -9,6 +9,10 @@ export default function NewYearCountdown() {
     const [sec, setSec] = useState<number>(0)
 
     useEffect(() => {
+        function timerFinished() {
+            setIsNewYear(true)
+        }
+
         function updateTimer() {
             const now: Date = new Date()
             const newYear: Date = new Date(`Jan 01 ${now.getFullYear() + 1} 00:00:00`)
@@ -20,6 +24,8 @@ export default function NewYearCountdown() {
             const totalSec: number = Math.floor(msDiff / 1000)
 
             const hrsToNewYear: number = Math.floor(totalSec / 60 / 60)
+
+            // получаем ОСТАТКИ от целого. типа СКОЛЬКО У НАС ОСТАЕТСЯ сек/мин и мы это ИСПОЛЬЗУЕМ
             const minToNewYear: number = Math.floor((totalSec % (60 * 60)) / 60)
             const secToNewYear: number = Math.floor(totalSec % 60)
 
