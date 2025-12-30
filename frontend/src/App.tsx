@@ -246,7 +246,7 @@ export default function App() {
             getUserDataFromBackend()
         }
 
-        console.log(_level)
+        console.log('level ' + _level)
     }, [])
 
     //here will be func that each 10s data fly on back and there update
@@ -262,7 +262,7 @@ export default function App() {
                 </div>
             ) : (null)}*/}
             <div className="header">
-                <Header userName={user_name} level={String(_level)}/>
+                <Header userName={String(localStorage.getItem('userName'))} level={String(_level)}/>
             </div>
             {isEntered === 'true' ? (
                 <>
