@@ -1,13 +1,13 @@
 {
   "users": {
     "yura": {
-      "coins": 190,
-      "earnPerClick": 2,
-      "coinsToLevUp": 10100,
+      "coins": 198,
+      "earnPerClick": 3,
+      "coinsToLevUp": 20100,
       "coinsPerSec": 0,
       "level": 0,
-      "progressBarVal": 190,
-      "maxProgressVal": 190
+      "progressBarVal": 198,
+      "maxProgressVal": 198
     },
     "irina": {
       "coins": 10,
