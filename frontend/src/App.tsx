@@ -59,7 +59,7 @@ export default function App() {
 
         console.log(`%csending backdend user code: ${enterCode}`, "color: white")
         try {
-            const response = await fetch('http://localhost:3000/api/enter', {
+            const response = await fetch('/api/enter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ export default function App() {
             if (isEntered === 'true') {
                 async function putUserDatainBackend() {
                     try {
-                        const response = await fetch('http://localhost:3000/api/game/update', {
+                        const response = await fetch('/api/game/update', {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ export default function App() {
 
         if (isEntered === 'true') {
             async function getUserDataFromBackend() {
-                const response = await fetch('http://localhost:3000/api/user_data/get', {
+                const response = await fetch('/api/user_data/get', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
