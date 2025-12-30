@@ -23,12 +23,14 @@ export default function NewYearCountdown() {
             // в мс получаем сколько до нг
             const msDiff: number = Number(newYear) - Number(now)
 
-            // это мы мс просто переводим в сек
+            // это мы мс просто переводим в сек для удобства
             const totalSec: number = Math.floor(msDiff / 1000)
 
+            // переводим те сек в часы
             const hrsToNewYear: number = Math.floor(totalSec / 60 / 60)
-            // получаем ОСТАТКИ от целого. типа СКОЛЬКО У НАС ОСТАЕТСЯ сек/мин и мы это ИСПОЛЬЗУЕМ
-            const minToNewYear: number = Math.floor((totalSec % (60 * 60)) / 60)
+
+            // получаем ОСТАТКИ от целого. типа СКОЛЬКО У НАС ОСТАЕТСЯ сек/мин ДО НОВОГО ДНЯ(тут не важно, что нг именно в 2026)
+            const minToNewYear: number = Math.floor((totalSec % 3600) / 60)
             const secToNewYear: number = Math.floor(totalSec % 60)
 
             // сетаем
@@ -51,7 +53,7 @@ export default function NewYearCountdown() {
         }
     }, [])
 
-    const particlesInit = useCallback(async (engine) => {
+    const particlesInit = useCallback(async (engine: any) => {
         await loadFull(engine)
     }, [])
 
