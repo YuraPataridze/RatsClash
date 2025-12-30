@@ -279,21 +279,21 @@ export default function App() {
                                     <div className="bar-tab">
                                         <p>Earn per click</p>
                                         <div className="coin">
-                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <img src="/public/coinICON.svg" alt="coin"/>
                                             <p>{earnPerClick}</p>
                                         </div>
                                     </div>
                                     <div className="bar-tab">
                                         <p>Coins level up</p>
                                         <div className="coin">
-                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <img src="/public/coinICON.svg" alt="coin"/>
                                             <p>{coinsToLevUp}</p>
                                         </div>
                                     </div>
                                     <div className="bar-tab">
                                         <p>Auto earn p/sec</p>
                                         <div className="coin">
-                                            <img src="/assets/coinICON.svg" alt="coin"/>
+                                            <img src="/public/coinICON.svg" alt="coin"/>
                                             <p>{coinsPerSec}</p>
                                         </div>
                                     </div>
@@ -306,7 +306,7 @@ export default function App() {
                                     </>
                                 ) : (
                                     <>
-                                        <img src="/assets/coinICON.svg" alt="coins"/>
+                                        <img src="/public/coinICON.svg" alt="coins"/>
                                         <h1>{coins}</h1>
                                     </>
                                 )}
@@ -316,7 +316,7 @@ export default function App() {
                             </div>
                             <div className="click-btn">
                                 <div onClick={manageClick} className="button">
-                                    <img src="/assets/coinICON.svg" alt="click-btn"/>
+                                    <img src="/public/coinICON.svg" alt="click-btn"/>
                                 </div>
                             </div>
                         </>
